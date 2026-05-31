@@ -65,9 +65,11 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
 
-  /* Sidebar */
+  /* Layout */
   --sidebar-width: 220px;
   --sidebar-collapsed: 60px;
+  --header-height: 60px;
+  --bottombar-height: 56px;
 }
 
 /* ─── Tailwind theme bridge ─── */
@@ -155,6 +157,96 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-muted);
+}
+
+/* ─── Layout responsive ───
+   La estructura del dashboard vive mayormente en estilos inline, que no admiten
+   media queries. Estas clases semánticas mueven los layouts que sí necesitan
+   adaptarse a CSS, manteniendo idéntico el render en desktop (≥ lg). */
+
+/* Padding del <main>: fluido en mobile, + espacio inferior para la bottom nav. */
+.page-pad {
+  padding: 1.25rem;
+  padding-bottom: calc(1.25rem + var(--bottombar-height) + env(safe-area-inset-bottom, 0px));
+  background: var(--color-background);
+}
+@media (min-width: 768px) {
+  .page-pad { padding: 1.5rem 1.75rem; padding-bottom: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .page-pad { padding: 1.75rem 2rem; padding-bottom: 1.75rem; }
+}
+
+/* Dos gráficos del dashboard: apilados en mobile/tablet, lado a lado en md+. */
+.dash-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+@media (min-width: 768px) {
+  .dash-grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Recientes + Próximas entregas: apilados hasta lg, 1.4/1 en desktop. */
+.dash-grid-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 1024px) {
+  .dash-grid-main { grid-template-columns: 1.4fr 1fr; }
+}
+
+/* Strip de métricas: 2 col en mobile, 3 en tablet, 5 en desktop.
+   Usa gap real (no líneas de 1px) para que las celdas envuelvan sin bordes rotos;
+   cada celda dibuja su propio borde. */
+.resumen-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .resumen-strip { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .resumen-strip { grid-template-columns: 1.6fr 1fr 1fr 1fr 1.6fr; }
+}
+
+/* Kanban del tablero: scroll horizontal con columnas de ancho mínimo hasta lg,
+   4 columnas fluidas en desktop. */
+.kanban-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(264px, 1fr);
+  gap: 1rem;
+  align-items: start;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+@media (min-width: 1024px) {
+  .kanban-grid {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-columns: auto;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+}
+
+/* Resumen del detalle de proyecto: 1 col en mobile, 3 desde sm. */
+.detalle-resumen {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 640px) {
+  .detalle-resumen { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 }
 
 /* ─── Focus ring ─── */

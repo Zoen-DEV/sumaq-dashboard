@@ -97,7 +97,7 @@ export function ProyectoForm({ proyecto }: Props) {
           <Field label="Nombre del proyecto" error={errors.nombre?.message}>
             <input {...register("nombre")} style={inputStyle} placeholder="ej: Web corporativa Acme" />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Estado" error={errors.estado?.message}>
               <Controller
                 control={control}
@@ -118,7 +118,7 @@ export function ProyectoForm({ proyecto }: Props) {
               />
             </Field>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Fecha de inicio" error={errors.fechaInicio?.message}>
               <Controller
                 control={control}
@@ -142,7 +142,7 @@ export function ProyectoForm({ proyecto }: Props) {
 
         {/* Cliente */}
         <Section title="Cliente">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Nombre" error={errors.cliente?.nombre?.message}>
               <input {...register("cliente.nombre")} style={inputStyle} />
             </Field>
@@ -176,7 +176,7 @@ export function ProyectoForm({ proyecto }: Props) {
         </Section>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex flex-col-reverse gap-3 sm:flex-row">
           <button type="button" onClick={() => router.back()} style={cancelBtnStyle}>
             Cancelar
           </button>
