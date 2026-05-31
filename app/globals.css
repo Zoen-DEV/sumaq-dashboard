@@ -1,0 +1,298 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ─── Geist self-hosted ─── */
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* ─── Design tokens ─── */
+:root {
+  /* Colors – OKLCH, violet-tinted neutrals */
+  --color-background:       #111113;
+  --color-surface:          #131316;
+  --color-surface-elevated: #17171c;
+  --color-border:           #212126;
+  --color-foreground:       oklch(95% 0.005 285);
+  --color-muted:            oklch(55% 0.008 285);
+  --color-accent:           oklch(63% 0.22 285);
+  --color-accent-hover:     oklch(68% 0.24 285);
+  --color-accent-subtle:    oklch(20% 0.05 285);
+  --color-destructive:      oklch(55% 0.22 25);
+
+  /* Status colors */
+  --color-status-negociacion: oklch(72% 0.15 200);
+  --color-status-proceso:     oklch(72% 0.18 260);
+  --color-status-mantenimiento: oklch(72% 0.18 140);
+  --color-status-completado:  oklch(72% 0.08 285);
+
+  /* Typography */
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Type scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+
+  /* Easing */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Duration */
+  --dur-fast:   140ms;
+  --dur-base:   240ms;
+  --dur-slow:   420ms;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius:    0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Sidebar */
+  --sidebar-width: 220px;
+  --sidebar-collapsed: 60px;
+}
+
+/* ─── Tailwind theme bridge ─── */
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-border:     var(--color-border);
+  --color-accent:     var(--color-accent);
+  --color-muted:      var(--color-muted);
+  --color-surface:    var(--color-surface);
+  --color-destructive: var(--color-destructive);
+}
+
+/* ─── Base styles ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Page load animations ─── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-up {
+  /* `backwards` (no `both`): evita el flash inicial pero NO deja un transform
+     residual al terminar. Un transform persistente — aunque sea translateY(0) —
+     crea un containing block que rompe el position:fixed del DragOverlay de
+     dnd-kit y descuadra la detección de colisiones. */
+  animation: fade-up var(--dur-slow) var(--ease-out-expo) backwards;
+}
+
+.animate-fade-in {
+  animation: fade-in var(--dur-base) var(--ease-out-quart) both;
+}
+
+/* Staggered reveals */
+.stagger-1 { animation-delay: 60ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 180ms; }
+.stagger-4 { animation-delay: 240ms; }
+.stagger-5 { animation-delay: 300ms; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* ─── Focus ring ─── */
+/* Suprimido globalmente: cada componente maneja su propio indicador de foco
+   (bordes, box-shadow, cambios de color). Evita outlines en modales y controles
+   con estilo propio. */
+:focus-visible {
+  outline: none;
+}
+
+/* ─── Base UI components ─── */
+.select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.625rem;
+  border-radius: calc(var(--radius) - 2px);
+  cursor: pointer;
+  outline: none;
+  transition: background var(--dur-fast);
+  list-style: none;
+}
+.select-item[data-highlighted] {
+  background: color-mix(in oklch, var(--color-foreground) 6%, transparent);
+}
+.select-item[data-selected] .select-item-check {
+  opacity: 1;
+}
+
+.datepicker-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--color-foreground);
+  transition: background var(--dur-fast);
+}
+.datepicker-day:hover {
+  background: color-mix(in oklch, var(--color-foreground) 8%, transparent);
+}
+.datepicker-day[data-selected] {
+  background: var(--color-accent);
+  color: #fff;
+}
+.datepicker-day[data-today]:not([data-selected]) {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+.datepicker-day[data-outside] {
+  opacity: 0.3;
+}
+
+/* ─── Toolbar de editor de texto ─── */
+.toolbar-btn {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.toolbar-btn:hover {
+  background: color-mix(in oklch, var(--color-foreground) 8%, transparent);
+  color: var(--color-foreground);
+}
+.toolbar-btn--active {
+  background: color-mix(in oklch, var(--color-accent) 22%, transparent);
+  color: var(--color-accent);
+  box-shadow: inset 0 -2px 0 var(--color-accent);
+}
+.toolbar-btn--active:hover {
+  background: color-mix(in oklch, var(--color-accent) 32%, transparent);
+  color: var(--color-accent-hover);
+}
+
+/* ─── TipTap editor ─── */
+.tiptap-editor-content {
+  outline: none;
+  min-height: 120px;
+  padding: 0.75rem;
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--color-foreground);
+  font-family: inherit;
+}
+.tiptap-editor-content p { margin: 0 0 0.5em; }
+.tiptap-editor-content p:last-child { margin-bottom: 0; }
+.tiptap-editor-content h2 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin: 0.75em 0 0.375em;
+  color: var(--color-foreground);
+  line-height: 1.3;
+}
+.tiptap-editor-content h2:first-child { margin-top: 0; }
+.tiptap-editor-content ul,
+.tiptap-editor-content ol {
+  padding-left: 1.4em;
+  margin: 0 0 0.5em;
+}
+.tiptap-editor-content ul { list-style: disc; }
+.tiptap-editor-content ol { list-style: decimal; }
+.tiptap-editor-content li { margin-bottom: 0.2em; }
+.tiptap-editor-content strong { font-weight: 600; }
+.tiptap-editor-content em { font-style: italic; }
+.tiptap-editor-content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  word-break: break-word;
+  transition: color var(--dur-fast);
+}
+.tiptap-editor-content a:hover {
+  color: var(--color-accent-hover);
+}
+.tiptap-editor-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-muted);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
