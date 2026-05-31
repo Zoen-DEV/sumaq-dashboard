@@ -30,19 +30,7 @@ export function ResumenStrip({ proyectos }: Props) {
   ];
 
   return (
-    <div
-      className="animate-fade-up"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1.6fr 1fr 1fr 1fr 1.6fr",
-        gap: "1px",
-        background: "var(--color-border)",
-        borderRadius: "var(--radius-lg)",
-        overflow: "hidden",
-        border: "1px solid var(--color-border)",
-        marginBottom: "2rem",
-      }}
-    >
+    <div className="resumen-strip animate-fade-up">
       {stats.map((stat, i) => (
         <div
           key={stat.label}

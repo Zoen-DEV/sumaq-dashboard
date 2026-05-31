@@ -11,26 +11,28 @@ export function LinksEditor() {
   return (
     <div className="flex flex-col gap-2">
       {fields.map((field, i) => (
-        <div key={field.id} className="flex gap-2">
+        <div key={field.id} className="flex flex-col gap-2 sm:flex-row">
           <input
             {...register(`links.${i}.etiqueta`)}
             placeholder="Etiqueta (ej: Figma)"
             style={inputStyle}
           />
-          <input
-            {...register(`links.${i}.url`)}
-            placeholder="URL"
-            type="url"
-            style={{ ...inputStyle, flex: 2 }}
-          />
-          <button
-            type="button"
-            onClick={() => remove(i)}
-            style={iconBtnStyle}
-            aria-label="Eliminar link"
-          >
-            <Trash2 size={14} />
-          </button>
+          <div className="flex gap-2" style={{ flex: 2 }}>
+            <input
+              {...register(`links.${i}.url`)}
+              placeholder="URL"
+              type="url"
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={() => remove(i)}
+              style={iconBtnStyle}
+              aria-label="Eliminar link"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
         </div>
       ))}
       <button

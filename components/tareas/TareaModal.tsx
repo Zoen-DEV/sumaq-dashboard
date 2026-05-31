@@ -180,7 +180,7 @@ export function TareaModal({ open, tarea, initialMode = "preview", onSave, onClo
           borderRadius: "var(--radius-lg)",
           padding: "1.5rem",
           width: "min(560px, calc(100vw - 2rem))",
-          maxHeight: "calc(100vh - 4rem)",
+          maxHeight: "calc(100dvh - 4rem)",
           overflowY: "auto",
           zIndex: 101,
           boxShadow: "0 24px 64px oklch(0% 0 0 / 0.55)",

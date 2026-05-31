@@ -19,15 +19,10 @@ export function ProyectoDetalle({ proyecto: p }: { proyecto: IProyecto }) {
     <div className="animate-fade-in mx-auto w-full max-w-[1180px]">
       {/* Header */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          gap: "1rem",
-          marginBottom: "1.75rem",
-        }}
+        className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3"
+        style={{ marginBottom: "1.75rem" }}
       >
-        <div>
+        <div className="min-w-0">
           <h2 style={{ fontSize: "var(--text-2xl)", fontWeight: 700, marginBottom: "0.25rem" }}>
             {p.nombre}
           </h2>
@@ -35,7 +30,7 @@ export function ProyectoDetalle({ proyecto: p }: { proyecto: IProyecto }) {
             {p.cliente.nombre} · {p.cliente.empresa}
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+        <div className="flex flex-wrap items-center gap-3">
           <span
             style={{
               fontSize: "var(--text-xs)",
@@ -75,7 +70,7 @@ export function ProyectoDetalle({ proyecto: p }: { proyecto: IProyecto }) {
           <div className="flex flex-col gap-4 max-w-3xl">
             {/* Finanzas y fechas */}
             <Card title="Resumen">
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+              <div className="detalle-resumen">
                 <Dato label="Presupuesto" value={formatCurrency(p.presupuesto)} large />
                 <Dato label="Inicio" value={formatDate(p.fechaInicio)} />
                 <Dato label="Entrega" value={formatDate(p.fechaEntrega)} />

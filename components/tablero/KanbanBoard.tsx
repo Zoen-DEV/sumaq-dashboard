@@ -135,14 +135,7 @@ export function KanbanBoard({ initialProyectos }: Props) {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "1rem",
-          alignItems: "start",
-        }}
-      >
+      <div className="kanban-grid">
         {ESTADOS.map(e => (
           <KanbanColumn
             key={e.value}

@@ -2,32 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  FolderKanban,
-  KanbanSquare,
-  LogOut,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
-
-const NAV = [
-  { href: "/",        label: "Dashboard", icon: LayoutDashboard },
-  { href: "/proyectos", label: "Proyectos", icon: FolderKanban },
-  { href: "/tablero",   label: "Tablero",   icon: KanbanSquare },
-];
+import { NAV, isNavActive } from "./nav-items";
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
     <aside
+      className="hidden lg:flex"
       style={{
         width: "var(--sidebar-width)",
         flexShrink: 0,
         background: "var(--color-surface)",
         borderRight: "1px solid var(--color-border)",
-        display: "flex",
         flexDirection: "column",
         height: "100dvh",
         position: "sticky",
@@ -67,8 +57,7 @@ export function Sidebar() {
       {/* Nav */}
       <nav className="flex flex-col gap-1 p-3 flex-1">
         {NAV.map(({ href, label, icon: Icon }) => {
-          const isActive =
-            href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const isActive = isNavActive(href, pathname);
 
           return (
             <Link

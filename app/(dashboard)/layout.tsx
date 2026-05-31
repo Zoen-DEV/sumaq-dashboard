@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/layout/Sidebar";
+import { BottomNav } from "@/components/layout/BottomNav";
 import { Header } from "@/components/layout/Header";
 import { SessionProvider } from "@/components/layout/SessionProvider";
 import { DemoBanner } from "@/components/demo/DemoBanner";
@@ -12,13 +13,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex flex-1 flex-col overflow-hidden">
           <Header />
           <DemoBanner />
-          <main
-            className="flex-1 overflow-y-auto"
-            style={{ padding: "1.75rem 2rem", background: "var(--color-background)" }}
-          >
+          <main className="page-pad flex-1 overflow-y-auto">
             {children}
           </main>
         </div>
+        <BottomNav />
       </div>
       <Toaster
         theme="dark"

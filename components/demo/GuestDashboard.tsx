@@ -18,14 +18,7 @@ export function GuestDashboard() {
     <div className="animate-fade-in">
       <ResumenStrip proyectos={proyectos} />
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "1.25rem",
-          marginBottom: "1.25rem",
-        }}
-      >
+      <div className="dash-grid-2">
         <div className="animate-fade-up stagger-2">
           <DonutEstados proyectos={proyectos} />
         </div>
@@ -34,13 +27,7 @@ export function GuestDashboard() {
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.4fr 1fr",
-          gap: "1.25rem",
-        }}
-      >
+      <div className="dash-grid-main">
         <div className="animate-fade-up stagger-3">
           <ProyectosRecientes proyectos={proyectos} />
         </div>

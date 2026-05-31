@@ -4,6 +4,13 @@ Dashboard interno de gestión de proyectos de clientes. **Next.js 16 + React 19 
 
 Rutas principales: `/` (dashboard) · `/proyectos` · `/proyectos/[id]` · `/tablero`.
 
+## Responsive
+
+Adaptado a mobile/tablet/desktop (mobile-first). Breakpoints: mobile `< 768px`, tablet `md` (768–1023px), desktop `lg` (≥ 1024px).
+
+- **Navegación:** `Sidebar` solo en desktop (`hidden lg:flex`); en `< lg` se usa `BottomNav` (bottom tab bar) y "Salir" vive en el `Header`. El array de destinos y el helper `isNavActive` están en `components/layout/nav-items.ts` (compartido por ambos).
+- **Layouts responsive:** como la estructura usa estilos inline (sin media queries), los grids que se adaptan viven como clases semánticas con `@media` en `app/globals.css`: `.page-pad`, `.dash-grid-2`, `.dash-grid-main`, `.resumen-strip` (2→3→5 col), `.kanban-grid` (scroll-x hasta `lg`), `.detalle-resumen`. Mantener regresión cero en desktop (`≥ lg`) al tocarlas.
+
 ## Servidor de desarrollo
 
 **El servidor lo corro yo (el dueño) en mi propia terminal**, para tener los logs a la vista.
