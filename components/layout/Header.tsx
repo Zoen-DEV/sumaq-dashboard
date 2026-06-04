@@ -102,9 +102,8 @@ export function Header() {
           type="button"
           onClick={() => signOut({ callbackUrl: "/login" })}
           aria-label="Cerrar sesión"
-          className="lg:hidden"
+          className="lg-only-flex"
           style={{
-            display: "flex",
             alignItems: "center",
             justifyContent: "center",
             width: "40px",
