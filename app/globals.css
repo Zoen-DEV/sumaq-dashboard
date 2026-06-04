@@ -239,6 +239,25 @@ body {
   }
 }
 
+/* Bottom nav (mobile/tablet): los estilos inline ganan en especificidad a la
+   utilidad `lg:hidden`, así que el display que controla la visibilidad debe
+   vivir aquí, no inline. Visible < lg, oculta en desktop. */
+.bottom-nav {
+  display: grid;
+}
+@media (min-width: 1024px) {
+  .bottom-nav { display: none; }
+}
+
+/* Controles que solo existen en < lg pero llevan `display:flex` inline (el
+   inline pisaría a `lg:hidden`): botón "Salir" del Header, etc. */
+.lg-only-flex {
+  display: flex;
+}
+@media (min-width: 1024px) {
+  .lg-only-flex { display: none; }
+}
+
 /* Resumen del detalle de proyecto: 1 col en mobile, 3 desde sm. */
 .detalle-resumen {
   display: grid;

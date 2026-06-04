@@ -15,14 +15,13 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Navegación principal"
-      className="lg:hidden"
+      className="bottom-nav"
       style={{
         position: "fixed",
         bottom: 0,
         left: 0,
         right: 0,
         zIndex: 30,
-        display: "grid",
         gridTemplateColumns: `repeat(${NAV.length}, 1fr)`,
         height: "var(--bottombar-height)",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
